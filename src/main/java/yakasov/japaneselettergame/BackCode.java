@@ -37,9 +37,13 @@ public class BackCode {
         return lines;
     }
 
-    public int getRandomIndex(int max) {
+    public int getRandomIndex(int max, int previousIndex) {
         Random random = new Random();
-        return random.nextInt(max);
+        int chosenIndex = previousIndex;
+        while (chosenIndex == previousIndex) {
+            chosenIndex = random.nextInt(max);
+        }
+        return chosenIndex;
     }
 
     public int getRandomIndexExclusionary(int max, ArrayList<Integer> chosenIndexes) {

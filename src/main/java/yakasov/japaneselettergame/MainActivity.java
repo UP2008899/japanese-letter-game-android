@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setAllCharacters() {
-        int chosenIndex = backCode.getRandomIndex(maxLetters);
+        int chosenIndex = backCode.getRandomIndex(maxLetters, previousIndex);
         correctButton = buttons.get(chosenIndex % 4);
 
         setScoreText();
