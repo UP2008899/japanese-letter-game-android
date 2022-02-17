@@ -68,8 +68,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setAllEnglishCharacters(int chosenIndex) {
+        ArrayList<Integer> chosenIndexes = new ArrayList<>();
+        chosenIndexes.add(chosenIndex);
+        int i;
         for (Button button : buttons) {
-            button.setText(englishLines.get(backCode.getRandomIndexExclusionary(maxLetters, chosenIndex)));
+            i = backCode.getRandomIndexExclusionary(maxLetters, chosenIndexes);
+            chosenIndexes.add(i);
+            button.setText(englishLines.get(i));
         }
     }
 

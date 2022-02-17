@@ -42,12 +42,22 @@ public class BackCode {
         return random.nextInt(max);
     }
 
-    public int getRandomIndexExclusionary(int max, int chosenIndex) {
-        Random random = new Random();
-        int chosenValue = chosenIndex;
-        while (chosenValue == chosenIndex) {
+    public int getRandomIndexExclusionary(int max, ArrayList<Integer> chosenIndexes) {
+        int chosenValue;
+        boolean pickedAlready;
+        while (true) {
+            Random random = new Random();
             chosenValue = random.nextInt(max);
+
+            pickedAlready = false;
+            for (int i : chosenIndexes) {
+                if (chosenValue == i) {
+                    pickedAlready = true;
+                }
+            }
+            if (!pickedAlready) {
+                return chosenValue;
+            }
         }
-        return chosenValue;
     }
 }
