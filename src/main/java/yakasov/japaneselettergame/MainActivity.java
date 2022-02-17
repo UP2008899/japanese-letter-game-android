@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public Button correctButton;
 
     public static int score;
-    public static int maxLetters = 104;
+    public static int maxLetters = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
         correctButton = buttons.get(chosenIndex % 4);
 
         TextView tv = findViewById(R.id.scoreText);
-        tv.setText(getResources().getString(R.string.score, score));
+        //tv.setText(getResources().getString(R.string.score, score));
+        tv.setText(String.valueOf(score));
 
         setMainJapaneseCharacter(chosenIndex);
         setAllEnglishCharacters(chosenIndex);

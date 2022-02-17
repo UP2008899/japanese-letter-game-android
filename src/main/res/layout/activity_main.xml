@@ -31,54 +31,82 @@
             android:id="@+id/tableRow1"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:padding="0dp">
 
             <Button
                 android:id="@+id/buttonA"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
+                android:layout_margin="0dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/purple_200"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:onClick="buttonPressed"
+                android:textColor="@color/android_darkgrey"
                 android:textSize="24sp"
-                tools:ignore="SpeakableTextPresentCheck"
-                style="?android:attr/buttonBarButtonStyle" />
+                app:cornerRadius="0dp"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <Button
                 android:id="@+id/buttonB"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
+                android:layout_margin="0dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/purple_200"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:onClick="buttonPressed"
+                android:textColor="@color/android_darkgrey"
                 android:textSize="24sp"
-                tools:ignore="SpeakableTextPresentCheck"
-                style="?android:attr/buttonBarButtonStyle" />
+                app:cornerRadius="0dp"
+                tools:ignore="SpeakableTextPresentCheck" />
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow2"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:padding="0dp">
 
             <Button
                 android:id="@+id/buttonC"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
+                android:layout_margin="0dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/purple_200"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:onClick="buttonPressed"
+                android:textColor="@color/android_darkgrey"
                 android:textSize="24sp"
-                tools:ignore="SpeakableTextPresentCheck"
-                style="?android:attr/buttonBarButtonStyle" />
+                app:cornerRadius="0dp"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <Button
                 android:id="@+id/buttonD"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
+                android:layout_margin="0dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/purple_200"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:onClick="buttonPressed"
+                android:textColor="@color/android_darkgrey"
                 android:textSize="24sp"
-                tools:ignore="SpeakableTextPresentCheck"
-                style="?android:attr/buttonBarButtonStyle" />
+                app:cornerRadius="0dp"
+                tools:ignore="SpeakableTextPresentCheck" />
         </TableRow>
     </TableLayout>
 
@@ -86,10 +114,13 @@
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/score"
+        android:layout_marginEnd="150dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
