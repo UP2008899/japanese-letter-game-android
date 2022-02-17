@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">JapaneseLetterGame</string>
+    <string name="score">Score = %1d</string>
 </resources>

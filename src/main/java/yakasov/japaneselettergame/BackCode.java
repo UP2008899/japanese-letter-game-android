@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 public class BackCode {
-    private Context context;
+    private final Context context;
 
     public BackCode(Context context) {
         this.context = context;

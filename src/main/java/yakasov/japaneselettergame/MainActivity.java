@@ -3,7 +3,6 @@ package yakasov.japaneselettergame;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,14 +14,16 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String englishPath = "english.txt";
     public static final String japanesePath = "japanese.txt";
-    public static final String TAG = MainActivity.class.getSimpleName();
 
     public static List<String> englishLines;
     public static List<String> japaneseLines;
     private BackCode backCode;
 
-    public static ArrayList<Button> buttons = new ArrayList<Button>();
-    public static Button correctButton;
+    public static ArrayList<Button> buttons = new ArrayList<>();
+    public Button correctButton;
+
+    public static int score;
+    public static int maxLetters = 104;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void populateButtonsArrayList() {
-        Button buttonA = (Button)findViewById(R.id.buttonA);
-        Button buttonB = (Button)findViewById(R.id.buttonB);
-        Button buttonC = (Button)findViewById(R.id.buttonC);
-        Button buttonD = (Button)findViewById(R.id.buttonD);
+        Button buttonA = findViewById(R.id.buttonA);
+        Button buttonB = findViewById(R.id.buttonB);
+        Button buttonC = findViewById(R.id.buttonC);
+        Button buttonD = findViewById(R.id.buttonD);
         buttons.add(buttonA);
         buttons.add(buttonB);
         buttons.add(buttonC);
@@ -49,8 +50,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setAllCharacters() {
-        int chosenIndex = backCode.getRandomIndex(104);
+        int chosenIndex = backCode.getRandomIndex(maxLetters);
         correctButton = buttons.get(chosenIndex % 4);
+
+        TextView tv = findViewById(R.id.scoreText);
+        tv.setText(getResources().getString(R.string.score, score));
 
         setMainJapaneseCharacter(chosenIndex);
         setAllEnglishCharacters(chosenIndex);
@@ -64,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setAllEnglishCharacters(int chosenIndex) {
         for (Button button : buttons) {
-            button.setText(englishLines.get(backCode.getRandomIndexExclusionary(104, chosenIndex)));
+            button.setText(englishLines.get(backCode.getRandomIndexExclusionary(maxLetters, chosenIndex)));
         }
     }
 
@@ -74,7 +78,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void buttonPressed(View view) {
         if (findViewById(view.getId()) == correctButton) {
-            setAllCharacters();
+            score += 100;
+        } else {
+            score -= 50;
         }
+        setAllCharacters();
     }
 }

@@ -1,3 +1,4 @@
+n
 a
 i
 u
@@ -101,4 +102,3 @@ byo
 pya
 pyu
 pyo
-n
