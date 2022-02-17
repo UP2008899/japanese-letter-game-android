@@ -4,5 +4,6 @@ Small Java-based game for Android phones, matching Hiragana characters to Englis
 
 ## Screenshots
 
-![Customizable difficulty allows for more letters to be available](images/Screenshot_1645116379.png)
-![Lowest difficulty only uses basic vowels and 'n'](images/Screenshot_1645116390.png)
+Customizable Difficulty              | Lowest Difficulty
+:-----------------------------------:|:------------------------------------:
+![](images/Screenshot_1645116379.png)|![](images/Screenshot_1645116390.png)
