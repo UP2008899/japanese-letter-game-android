@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static int score;
     public static int maxLetters = 10;
+    public static int previousIndex = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,23 @@ public class MainActivity extends AppCompatActivity {
 
         populateButtonsArrayList();
         setAllCharacters();
+
+        SeekBar seekBar = findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int p, boolean b) {
+                if (p < 6) {
+                    p = 6;
+                }
+                maxLetters = p;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
     }
 
     public void populateButtonsArrayList() {
@@ -53,9 +72,12 @@ public class MainActivity extends AppCompatActivity {
         int chosenIndex = backCode.getRandomIndex(maxLetters);
         correctButton = buttons.get(chosenIndex % 4);
 
-        TextView tv = findViewById(R.id.scoreText);
-        //tv.setText(getResources().getString(R.string.score, score));
-        tv.setText(String.valueOf(score));
+        setScoreText();
+        if (previousIndex != -1) {
+            setFeedbackText();
+        }
+
+        previousIndex = chosenIndex;
 
         setMainJapaneseCharacter(chosenIndex);
         setAllEnglishCharacters(chosenIndex);
@@ -69,7 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void setAllEnglishCharacters(int chosenIndex) {
         ArrayList<Integer> chosenIndexes = new ArrayList<>();
-        chosenIndexes.add(chosenIndex);
+        chosenIndexes.add(chosenIndex);  // Prevent correct character from being chosen
+                                         // This is for the correct button only
+        chosenIndexes.add(previousIndex);  // Prevent previous character from being chosen
         int i;
         for (Button button : buttons) {
             i = backCode.getRandomIndexExclusionary(maxLetters, chosenIndexes);
@@ -80,6 +104,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void setCorrectEnglishCharacter(int chosenIndex) {
         correctButton.setText(englishLines.get(chosenIndex));
+    }
+
+    public void setScoreText() {
+        TextView tv = findViewById(R.id.scoreText);
+        //tv.setText(getResources().getString(R.string.score, score));
+        tv.setText(String.valueOf(score));
+    }
+
+    public void setFeedbackText() {
+        TextView tv = findViewById(R.id.feedbackText);
+        tv.setVisibility(View.VISIBLE);
+        tv.setText(getResources().getString(R.string.feedback, japaneseLines.get(previousIndex),
+                englishLines.get(previousIndex)));
+
     }
 
     public void buttonPressed(View view) {
