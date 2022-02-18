@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public Button correctButton;
 
     public static int score;
-    public static int maxLetters = 10;
+    public static int maxLetters = 104;
     public static int previousIndex = -1;
 
     @Override
