@@ -1,9 +1,12 @@
 package yakasov.japaneselettergame;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -16,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String englishPath = "english.txt";
     public static final String japanesePath = "japanese.txt";
+    private static final String TAG = MainActivity.class.getName();
 
     public static List<String> englishLines;
     public static List<String> japaneseLines;
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         backCode = new BackCode(this);
         englishLines = backCode.readLine(englishPath);
         japaneseLines = backCode.readLine(japanesePath);
+
+        loadPrefs();
 
         populateButtonsArrayList();
         setAllCharacters();
@@ -92,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void setScoreText() {
         TextView tv = findViewById(R.id.scoreText);
-        //tv.setText(getResources().getString(R.string.score, score));
         tv.setText(String.valueOf(score));
     }
 
@@ -116,5 +121,18 @@ public class MainActivity extends AppCompatActivity {
     public void settingsPressed(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    public void loadPrefs() {
+        Log.d(TAG, "Getting prefs");
+        SharedPreferences prefs = getSharedPreferences("yakasov.japaneselettergame_preferences", 0);
+        try {
+            int dev_letter_count = Integer.parseInt(prefs.getString("dev_letter_count", ""));
+            if (6 < dev_letter_count && dev_letter_count <= 104) {
+                maxLetters = dev_letter_count;
+            }
+        } catch (java.lang.NumberFormatException e) {
+            Log.d(TAG, "dev_letter_count invalid ie not integer");
+        }
     }
 }
