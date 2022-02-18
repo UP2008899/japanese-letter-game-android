@@ -3,6 +3,10 @@ package yakasov.japaneselettergame;
 import android.content.Context;
 import android.content.res.AssetManager;
 
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +39,23 @@ public class BackCode {
         }
 
         return lines;
+    }
+
+    public JSONObject loadJson(String path) {
+        AssetManager am = context.getAssets();
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            InputStream is = am.open(path);
+
+            JSONParser jsonParser = new JSONParser();
+            jsonObject = (JSONObject)jsonParser.parse(
+                    new InputStreamReader(is, "UTF-8"));
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 
     public int getRandomIndex(int max, int previousIndex) {

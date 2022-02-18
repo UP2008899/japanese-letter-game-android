@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +21,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String englishPath = "english.txt";
     public static final String japanesePath = "japanese.txt";
+    public static final String jsonPath = "characters.json";
     private static final String TAG = MainActivity.class.getName();
 
+    private BackCode backCode;
     public static List<String> englishLines;
     public static List<String> japaneseLines;
-    private BackCode backCode;
+    public static JSONObject allCharacters;
 
     public static ArrayList<Button> buttons = new ArrayList<>();
     public Button correctButton;
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         backCode = new BackCode(this);
+        allCharacters = backCode.loadJson(jsonPath);
+        Log.d(TAG, String.valueOf(allCharacters));
         englishLines = backCode.readLine(englishPath);
         japaneseLines = backCode.readLine(japanesePath);
 
