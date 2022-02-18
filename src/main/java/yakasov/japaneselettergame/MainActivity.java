@@ -39,23 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         populateButtonsArrayList();
         setAllCharacters();
-
-        SeekBar seekBar = findViewById(R.id.seekBar);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int p, boolean b) {
-                if (p < 6) {
-                    p = 6;
-                }
-                maxLetters = p;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
     }
 
     public void populateButtonsArrayList() {
