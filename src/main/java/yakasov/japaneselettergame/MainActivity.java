@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
         englishLines = backCode.readLine(englishPath);
         japaneseLines = backCode.readLine(japanesePath);
 
-        loadPrefs();
-
         populateButtonsArrayList();
         setAllCharacters();
     }
@@ -59,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setAllCharacters() {
+        loadPrefs();
+
         int chosenIndex = backCode.getRandomIndex(maxLetters, previousIndex);
         correctButton = buttons.get(chosenIndex % 4);
 

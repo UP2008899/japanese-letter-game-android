@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gojuon_rows">
+        <item>ka-row</item>
+        <item>sa-row</item>
+        <item>ta-row</item>
+        <item>na-row</item>
+        <item>ha-row</item>
+        <item>ma-row</item>
+        <item>ya-row</item>
+        <item>ra-row</item>
+        <item>wa-row</item>
+    </string-array>
+    <string-array name="dakuon_rows">
+        <item>ga-row</item>
+        <item>za-row</item>
+        <item>da-row</item>
+        <item>ba-row</item>
+        <item>pa-row</item>
+    </string-array>
+</resources>

@@ -7,10 +7,18 @@
         app:title="@string/letters_header"
         tools:ignore="TextContrastCheck">
 
-        <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
+        <MultiSelectListPreference
+            android:defaultValue="@array/gojuon_rows"
+            android:entries="@array/gojuon_rows"
+            android:entryValues="@array/gojuon_rows"
+            android:key="hiragana_gojuon_list"
+            android:title="@string/gojuon_rows" />
+        <MultiSelectListPreference
+            android:defaultValue="@array/dakuon_rows"
+            android:entries="@array/dakuon_rows"
+            android:entryValues="@array/dakuon_rows"
+            android:key="hiragana_dakuon_list"
+            android:title="@string/dakuon_rows" />
 
     </PreferenceCategory>
 
@@ -23,9 +31,6 @@
             app:key="dev_letter_count"
             app:title="Letter count"
             app:useSimpleSummaryProvider="true" />
-        <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
 
     </PreferenceCategory>
 

@@ -8,6 +8,6 @@
     <string name="letters_header">Letters</string>
     <string name="developer_header">Developer</string>
 
-    <string name="signature_title">Your signature</string>
-    <string name="sync_title">Sync email periodically</string>
+    <string name="gojuon_rows">Hiragana gojūon rows</string>
+    <string name="dakuon_rows">Hiragana dakuon rows</string>
 </resources>
