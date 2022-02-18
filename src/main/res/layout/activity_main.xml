@@ -142,14 +142,12 @@
         android:id="@+id/difficultyText"
         android:layout_width="wrap_content"
         android:layout_height="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="80dp"
         android:text="@string/difficulty"
         android:textAlignment="center"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toStartOf="@+id/seekBar"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/seekBar" />
 
     <SeekBar
         android:id="@+id/seekBar"
@@ -157,7 +155,7 @@
         android:layout_height="14dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="48dp"
         android:max="104"
         android:progress="10"
         android:progressTint="@color/android_grey"
@@ -167,5 +165,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/difficultyText" />
+
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="69dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="@color/purple_200"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:onClick="settingsPressed"
+        android:text="SET"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
