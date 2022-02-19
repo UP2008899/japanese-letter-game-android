@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
   private Button correctButton;
   private int score;
   private boolean settingsRefreshed = false;
-  //    private static int maxLetters = 104;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     setScoreText();
 
     BackCode.setPreviousCharacters();
-    if (BackCode.returnCorrectEnglishCharacter() != "") {
+    if (!"".equals(BackCode.returnCorrectEnglishCharacter())) {
       setFeedbackText();
     }
 
@@ -131,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
       int devLetterCount = Integer.parseInt(prefs.getString("dev_letter_count", ""));
       if (6 < devLetterCount && devLetterCount <= 104) {
         Log.d(TAG, String.valueOf(devLetterCount));
-        // maxLetters = dev_letter_count;
+        // Currently not in use, but load anyway so I remember how to do it in the future
       }
     } catch (java.lang.NumberFormatException e) {
       Log.d(TAG, "devLetterCount invalid ie not integer");
