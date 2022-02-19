@@ -1,13 +1,9 @@
 <resources>
-    <string name="app_name">JapaneseLetterGame</string>
-    <string name="score">Score = %1d</string>
+    <string name="app_name">Japanese Letter Game</string>
     <string name="feedback">%1s, %2s</string>
-    <string name="difficulty">Letters</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">Settings</string>
 
     <string name="letters_header">Letters</string>
-    <string name="developer_header">Developer</string>
-
     <string name="gojuon_rows">Hiragana gojūon rows</string>
     <string name="dakuon_rows">Hiragana dakuon rows</string>
 </resources>

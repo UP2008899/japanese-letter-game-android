@@ -45,7 +45,7 @@
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:onClick="buttonPressed"
-                android:textColor="@color/android_darkgrey"
+                android:textColor="@color/android_dark_grey"
                 android:textSize="24sp"
                 app:cornerRadius="0dp"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -61,7 +61,7 @@
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:onClick="buttonPressed"
-                android:textColor="@color/android_darkgrey"
+                android:textColor="@color/android_dark_grey"
                 android:textSize="24sp"
                 app:cornerRadius="0dp"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -86,7 +86,7 @@
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:onClick="buttonPressed"
-                android:textColor="@color/android_darkgrey"
+                android:textColor="@color/android_dark_grey"
                 android:textSize="24sp"
                 app:cornerRadius="0dp"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -102,7 +102,7 @@
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:onClick="buttonPressed"
-                android:textColor="@color/android_darkgrey"
+                android:textColor="@color/android_dark_grey"
                 android:textSize="24sp"
                 app:cornerRadius="0dp"
                 tools:ignore="SpeakableTextPresentCheck" />

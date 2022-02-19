@@ -36,12 +36,6 @@ public class MainActivity extends AppCompatActivity {
     setAllCharacters();
   }
 
-  /*
-  TODO:
-  - Add developer toggle so developer options actually get applied
-  - General aesthetic fixes
-   */
-
   public void populateButtonsArrayList() {
     Button buttonA = findViewById(R.id.buttonA);
     Button buttonB = findViewById(R.id.buttonB);

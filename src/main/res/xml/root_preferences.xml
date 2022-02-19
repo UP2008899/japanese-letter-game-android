@@ -22,16 +22,4 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:textColor="#00838F"
-        app:title="@string/developer_header"
-        tools:ignore="TextContrastCheck">
-
-        <EditTextPreference
-            app:key="dev_letter_count"
-            app:title="Letter count"
-            app:useSimpleSummaryProvider="true" />
-
-    </PreferenceCategory>
-
 </PreferenceScreen>

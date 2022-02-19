@@ -8,6 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="android_grey">#757575</color>
-    <color name="android_dark_grey" />
-    <color name="android_darkgrey">#3F3F3F</color>
+    <color name="android_dark_grey">#3F3F3F</color>
 </resources>
