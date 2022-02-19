@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private BackCode backCode;
     public static List<String> englishLines;
     public static List<String> japaneseLines;
-    public static JSONObject allCharacters;
+    public static org.json.simple.JSONObject allCharacters;
 
     public static ArrayList<Button> buttons = new ArrayList<>();
     public Button correctButton;

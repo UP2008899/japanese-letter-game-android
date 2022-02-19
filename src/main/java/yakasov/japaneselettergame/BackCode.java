@@ -41,15 +41,15 @@ public class BackCode {
         return lines;
     }
 
-    public JSONObject loadJson(String path) {
+    public org.json.simple.JSONObject loadJson(String path) {
         AssetManager am = context.getAssets();
-        JSONObject jsonObject = new JSONObject();
+        org.json.simple.JSONObject jsonObject = new org.json.simple.JSONObject();
 
         try {
             InputStream is = am.open(path);
 
             JSONParser jsonParser = new JSONParser();
-            jsonObject = (JSONObject)jsonParser.parse(
+            jsonObject = (org.json.simple.JSONObject)jsonParser.parse(
                     new InputStreamReader(is, "UTF-8"));
         } catch (IOException | ParseException e) {
             e.printStackTrace();
