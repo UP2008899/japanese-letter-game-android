@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
         correctButton = buttons.get(rand.nextInt(4));
         setScoreText();
-//        if (previousIndex != -1) {
-//            setFeedbackText();
-//        }
+
+        BackCode.setPreviousCharacters();
+        setFeedbackText();
 
         BackCode.getCorrectCharacterObj(allCharacters);  // Creates the correct object
         setMainJapaneseCharacter();
@@ -104,9 +104,9 @@ public class MainActivity extends AppCompatActivity {
     public void setFeedbackText() {
         TextView tv = findViewById(R.id.feedbackText);
         tv.setVisibility(View.VISIBLE);
-//        tv.setText(getResources().getString(R.string.feedback, japaneseLines.get(previousIndex),
-//                englishLines.get(previousIndex)));
-
+        tv.setText(getResources().getString(R.string.feedback,
+                BackCode.returnPreviousJapaneseCharacter(),
+                BackCode.returnPreviousEnglishCharacter()));
     }
 
     public void buttonPressed(View view) {
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 //maxLetters = dev_letter_count;
             }
         } catch (java.lang.NumberFormatException e) {
-            Log.d(TAG, "dev_letter_count invalid ie not integer");
+            Log.d(TAG, "devLetterCount invalid ie not integer");
         }
 
         Log.d(TAG, BackCode.compareRows(prefs));

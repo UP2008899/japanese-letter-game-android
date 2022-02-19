@@ -29,6 +29,8 @@ public class BackCode {
 
     private static String correctEnglishCharacter = "";
     private static String correctJapaneseCharacter = "";
+    private static String previousEnglishCharacter = "";
+    private static String previousJapaneseCharacter = "";
 
     public BackCode(Context context) {
         this.context = context;
@@ -67,13 +69,25 @@ public class BackCode {
 
     public static String returnCorrectJapaneseCharacter() { return correctJapaneseCharacter; }
 
-    public static void getCorrectCharacterObj(org.json.simple.JSONObject allCharacters) {
-        randomRow = chosenRows.get(rand.nextInt(chosenRows.size()));  // String type
-        org.json.simple.JSONArray correctRowArray = (org.json.simple.JSONArray) allCharacters.get(randomRow);
-        org.json.simple.JSONObject correctCharacterObject = (org.json.simple.JSONObject) Objects.requireNonNull(correctRowArray).get(rand.nextInt(correctRowArray.size()));
+    public static void setPreviousCharacters() {
+        previousEnglishCharacter = correctEnglishCharacter;
+        previousJapaneseCharacter = correctJapaneseCharacter;
+    }
 
-        correctEnglishCharacter = (String) correctCharacterObject.keySet().iterator().next();
-        correctJapaneseCharacter = (String) correctCharacterObject.get(correctEnglishCharacter);
+    public static String returnPreviousEnglishCharacter() { return previousEnglishCharacter; }
+
+    public static String returnPreviousJapaneseCharacter() { return previousJapaneseCharacter; }
+
+    public static void getCorrectCharacterObj(org.json.simple.JSONObject allCharacters) {
+        correctJapaneseCharacter = previousJapaneseCharacter;
+        while (correctJapaneseCharacter == previousJapaneseCharacter) {
+            randomRow = chosenRows.get(rand.nextInt(chosenRows.size()));  // String type
+            org.json.simple.JSONArray correctRowArray = (org.json.simple.JSONArray) allCharacters.get(randomRow);
+            org.json.simple.JSONObject correctCharacterObject = (org.json.simple.JSONObject) Objects.requireNonNull(correctRowArray).get(rand.nextInt(correctRowArray.size()));
+
+            correctEnglishCharacter = (String) correctCharacterObject.keySet().iterator().next();
+            correctJapaneseCharacter = (String) correctCharacterObject.get(correctEnglishCharacter);
+        }
     }
 
     public static String getRandomEnglishCharacter(org.json.simple.JSONObject allCharacters, List<String> repeatedCharacters) {
