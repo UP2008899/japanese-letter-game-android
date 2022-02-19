@@ -1,6 +1,7 @@
 package yakasov.japaneselettergame;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 
 import org.json.JSONObject;
@@ -14,9 +15,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class BackCode {
     private final Context context;
+
+    public static String[] allRows = {"a-row", "ka-row", "sa-row", "ta-row", "na-row", "ma-row",
+                                      "ya-row", "ra-row", "wa-row", "ga-row", "za-row", "da-row",
+                                      "ba-row", "pa-row"};
+    public static ArrayList<String> chosenRows;
 
     public BackCode(Context context) {
         this.context = context;
@@ -56,6 +63,19 @@ public class BackCode {
         }
 
         return jsonObject;
+    }
+
+    public static String compareRows(SharedPreferences prefs) {
+        chosenRows = new ArrayList<>();
+        chosenRows.add("a-row");
+        Set<String> gojuon = prefs.getStringSet("hiragana_gojuon_list", null);
+        Set<String> dakuon = prefs.getStringSet("hiragana_dakuon_list", null);
+        for (String row : allRows) {
+            if (gojuon.contains(row) || dakuon.contains(row)) {
+                chosenRows.add(row);
+            }
+        }
+        return String.valueOf(chosenRows);
     }
 
     public int getRandomIndex(int max, int previousIndex) {

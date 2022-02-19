@@ -140,5 +140,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (java.lang.NumberFormatException e) {
             Log.d(TAG, "dev_letter_count invalid ie not integer");
         }
+
+        Log.d(TAG, BackCode.compareRows(prefs));
     }
 }
