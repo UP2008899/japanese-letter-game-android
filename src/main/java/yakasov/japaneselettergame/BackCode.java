@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
@@ -24,6 +26,7 @@ public class BackCode {
                                       "ya-row", "ra-row", "wa-row", "ga-row", "za-row", "da-row",
                                       "ba-row", "pa-row"};
     public static ArrayList<String> chosenRows;
+    public static String randomRow;
 
     public BackCode(Context context) {
         this.context = context;
@@ -76,6 +79,19 @@ public class BackCode {
             }
         }
         return String.valueOf(chosenRows);
+    }
+
+    public static void getRandomJapaneseCharacter(org.json.simple.JSONObject jsonObject) {
+        Random rand = new Random();
+        randomRow = chosenRows.get(rand.nextInt(chosenRows.size()));  // String type
+        org.json.simple.JSONArray randomRowArray = (org.json.simple.JSONArray) jsonObject.get(randomRow);
+
+        org.json.simple.JSONObject randomJapaneseCharacterObj = (org.json.simple.JSONObject) randomRowArray.get(rand.nextInt(randomRowArray.size()));
+        String randomJapaneseCharacter = randomJapaneseCharacterObj.toJSONString();
+        
+        System.out.println(randomRow);
+        System.out.println(randomRowArray);
+        System.out.println(randomJapaneseCharacter);
     }
 
     public int getRandomIndex(int max, int previousIndex) {

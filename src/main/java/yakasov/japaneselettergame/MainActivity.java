@@ -142,5 +142,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Log.d(TAG, BackCode.compareRows(prefs));
+        BackCode.getRandomJapaneseCharacter(allCharacters);
     }
 }
