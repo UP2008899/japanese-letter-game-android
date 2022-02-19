@@ -1,7 +1,6 @@
 package yakasov.japaneselettergame;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,13 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String jsonPath = "characters.json";
     private static final String TAG = MainActivity.class.getName();
 
-    private BackCode backCode;
     public static org.json.simple.JSONObject allCharacters;
 
     public static ArrayList<Button> buttons = new ArrayList<>();
@@ -38,12 +32,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        backCode = new BackCode(this);
+        BackCode backCode = new BackCode(this);
         allCharacters = backCode.loadJson(jsonPath);
 
         populateButtonsArrayList();
         setAllCharacters();
     }
+
+    /*
+    TODO:
+    - Add developer toggle so developer options actually get applied
+    - Prevent the same character from appearing twice
+    - Add feedback / previous translation back
+    - General aesthetic fixes
+     */
 
     public void populateButtonsArrayList() {
         Button buttonA = findViewById(R.id.buttonA);

@@ -4,17 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 
-import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
@@ -44,7 +41,7 @@ public class BackCode {
 
             JSONParser jsonParser = new JSONParser();
             jsonObject = (org.json.simple.JSONObject)jsonParser.parse(
-                    new InputStreamReader(is, "UTF-8"));
+                    new InputStreamReader(is, StandardCharsets.UTF_8));
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -73,7 +70,7 @@ public class BackCode {
         Random rand = new Random();
         randomRow = chosenRows.get(rand.nextInt(chosenRows.size()));  // String type
         org.json.simple.JSONArray correctRowArray = (org.json.simple.JSONArray) allCharacters.get(randomRow);
-        org.json.simple.JSONObject correctCharacterObject = (org.json.simple.JSONObject) correctRowArray.get(rand.nextInt(correctRowArray.size()));
+        org.json.simple.JSONObject correctCharacterObject = (org.json.simple.JSONObject) Objects.requireNonNull(correctRowArray).get(rand.nextInt(correctRowArray.size()));
 
         correctEnglishCharacter = (String) correctCharacterObject.keySet().iterator().next();
         correctJapaneseCharacter = (String) correctCharacterObject.get(correctEnglishCharacter);
@@ -85,7 +82,7 @@ public class BackCode {
         while (repeatedCharacters.contains(randomEnglishCharacter)) {
             randomRow = chosenRows.get(rand.nextInt(chosenRows.size()));  // String type
             org.json.simple.JSONArray randomRowArray = (org.json.simple.JSONArray) allCharacters.get(randomRow);
-            org.json.simple.JSONObject randomCharacterObject = (org.json.simple.JSONObject) randomRowArray.get(rand.nextInt(randomRowArray.size()));
+            org.json.simple.JSONObject randomCharacterObject = (org.json.simple.JSONObject) Objects.requireNonNull(randomRowArray).get(rand.nextInt(randomRowArray.size()));
             randomEnglishCharacter = (String) randomCharacterObject.keySet().iterator().next();
         }
         return randomEnglishCharacter;
