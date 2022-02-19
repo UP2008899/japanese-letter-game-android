@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public Button correctButton;
 
     public static int score;
+    public static boolean settingsRefreshed = false;
     public static int maxLetters = 104;
 
     @Override
@@ -56,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setAllCharacters() {
-        loadPrefs();
+        if (!settingsRefreshed) {
+            loadPrefs();
+            settingsRefreshed = true;
+        }
 
         Random rand = new Random();
         correctButton = buttons.get(rand.nextInt(4));
@@ -109,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void settingsPressed(View view) {
+        settingsRefreshed = false;
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }

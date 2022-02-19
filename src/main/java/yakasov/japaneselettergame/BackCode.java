@@ -22,9 +22,9 @@ import java.util.Set;
 public class BackCode {
     private final Context context;
 
-    private static String[] allRows = {"a-row", "ka-row", "sa-row", "ta-row", "na-row", "ma-row",
-                                      "ya-row", "ra-row", "wa-row", "ga-row", "za-row", "da-row",
-                                      "ba-row", "pa-row"};
+    private static final String[] allRows = {"a-row", "ka-row", "sa-row", "ta-row", "na-row", "ma-row",
+                                             "ya-row", "ra-row", "wa-row", "ga-row", "za-row", "da-row",
+                                             "ba-row", "pa-row"};
     private static ArrayList<String> chosenRows;
     private static String randomRow;
 
@@ -67,7 +67,7 @@ public class BackCode {
 
     public static String returnCorrectEnglishCharacter() { return correctEnglishCharacter; }
 
-    public static String returnCorrectJapaneseCharacter() { return correctEnglishCharacter; }
+    public static String returnCorrectJapaneseCharacter() { return correctJapaneseCharacter; }
 
     public static void getCorrectCharacterObj(org.json.simple.JSONObject allCharacters) {
         Random rand = new Random();
