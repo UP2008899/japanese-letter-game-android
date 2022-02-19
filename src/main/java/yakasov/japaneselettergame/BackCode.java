@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
@@ -24,6 +25,7 @@ public class BackCode {
                                              "ba-row", "pa-row"};
     private static ArrayList<String> chosenRows;
     private static String randomRow;
+    private static final Random rand = new Random();
 
     private static String correctEnglishCharacter = "";
     private static String correctJapaneseCharacter = "";
@@ -36,8 +38,7 @@ public class BackCode {
         AssetManager am = context.getAssets();
         org.json.simple.JSONObject jsonObject = new org.json.simple.JSONObject();
 
-        try {
-            InputStream is = am.open(path);
+        try (InputStream is = am.open(path)) {
 
             JSONParser jsonParser = new JSONParser();
             jsonObject = (org.json.simple.JSONObject)jsonParser.parse(
@@ -67,7 +68,6 @@ public class BackCode {
     public static String returnCorrectJapaneseCharacter() { return correctJapaneseCharacter; }
 
     public static void getCorrectCharacterObj(org.json.simple.JSONObject allCharacters) {
-        Random rand = new Random();
         randomRow = chosenRows.get(rand.nextInt(chosenRows.size()));  // String type
         org.json.simple.JSONArray correctRowArray = (org.json.simple.JSONArray) allCharacters.get(randomRow);
         org.json.simple.JSONObject correctCharacterObject = (org.json.simple.JSONObject) Objects.requireNonNull(correctRowArray).get(rand.nextInt(correctRowArray.size()));
@@ -76,8 +76,7 @@ public class BackCode {
         correctJapaneseCharacter = (String) correctCharacterObject.get(correctEnglishCharacter);
     }
 
-    public static String getRandomEnglishCharacter(org.json.simple.JSONObject allCharacters, ArrayList<String> repeatedCharacters) {
-        Random rand = new Random();
+    public static String getRandomEnglishCharacter(org.json.simple.JSONObject allCharacters, List<String> repeatedCharacters) {
         String randomEnglishCharacter = repeatedCharacters.get(0);
         while (repeatedCharacters.contains(randomEnglishCharacter)) {
             randomRow = chosenRows.get(rand.nextInt(chosenRows.size()));  // String type

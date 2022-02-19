@@ -15,16 +15,17 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String jsonPath = "characters.json";
+    private static final String JSONPATH = "characters.json";
     private static final String TAG = MainActivity.class.getName();
 
-    private static org.json.simple.JSONObject allCharacters;
+    private org.json.simple.JSONObject allCharacters;
 
     private static final ArrayList<Button> buttons = new ArrayList<>();
     private Button correctButton;
 
-    private static int score;
-    private static boolean settingsRefreshed = false;
+    private int score;
+    private boolean settingsRefreshed = false;
+    private final Random rand = new Random();
 //    private static int maxLetters = 104;
 
     @Override
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         BackCode backCode = new BackCode(this);
-        allCharacters = backCode.loadJson(jsonPath);
+        allCharacters = backCode.loadJson(JSONPATH);
 
         populateButtonsArrayList();
         setAllCharacters();
@@ -64,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
             settingsRefreshed = true;
         }
 
-        Random rand = new Random();
         correctButton = buttons.get(rand.nextInt(4));
         setScoreText();
 //        if (previousIndex != -1) {
@@ -128,8 +128,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "Getting prefs");
         SharedPreferences prefs = getSharedPreferences("yakasov.japaneselettergame_preferences", 0);
         try {
-            int dev_letter_count = Integer.parseInt(prefs.getString("dev_letter_count", ""));
-            if (6 < dev_letter_count && dev_letter_count <= 104) {
+            int devLetterCount = Integer.parseInt(prefs.getString("dev_letter_count", ""));
+            if (6 < devLetterCount && devLetterCount <= 104) {
+                Log.d(TAG, String.valueOf(devLetterCount));
                 //maxLetters = dev_letter_count;
             }
         } catch (java.lang.NumberFormatException e) {
