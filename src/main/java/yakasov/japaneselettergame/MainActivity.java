@@ -16,10 +16,13 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
   private static final String JSONPATH = "characters.json";
+  private static final String YOONJSONPATH = "yoon_characters.json";
+  private org.json.simple.JSONObject allCharacters;
+  private org.json.simple.JSONObject yoonCharacters;
+  private org.json.simple.JSONObject usedCharacterSet;
   private static final String TAG = MainActivity.class.getName();
   private static final ArrayList<Button> buttons = new ArrayList<>();
   private final Random rand = new Random();
-  private org.json.simple.JSONObject allCharacters;
   private Button correctButton;
   private int score;
   private boolean settingsRefreshed = false;
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     BackCode backCode = new BackCode(this);
     allCharacters = backCode.loadJson(JSONPATH);
+    yoonCharacters = backCode.loadJson(YOONJSONPATH);
 
     populateButtonsArrayList();
     setAllCharacters();
@@ -61,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
       setFeedbackText();
     }
 
-    BackCode.getCorrectCharacterObj(allCharacters); // Creates the correct object
+    BackCode.getCorrectCharacterObj(usedCharacterSet); // Creates the correct object
     setMainJapaneseCharacter();
     setAllEnglishCharacters();
     setCorrectEnglishCharacter();
@@ -76,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> repeatedCharacters = new ArrayList<>();
     repeatedCharacters.add(BackCode.returnCorrectEnglishCharacter());
     for (Button button : buttons) {
-      String letter = BackCode.getRandomEnglishCharacter(allCharacters, repeatedCharacters);
+      String letter = BackCode.getRandomEnglishCharacter(usedCharacterSet, repeatedCharacters);
       repeatedCharacters.add(letter);
       button.setText(letter);
     }
@@ -120,14 +124,11 @@ public class MainActivity extends AppCompatActivity {
   public void loadPrefs() {
     Log.d(TAG, "Getting prefs");
     SharedPreferences prefs = getSharedPreferences("yakasov.japaneselettergame_preferences", 0);
-    try {
-      int devLetterCount = Integer.parseInt(prefs.getString("dev_letter_count", ""));
-      if (6 < devLetterCount && devLetterCount <= 104) {
-        Log.d(TAG, String.valueOf(devLetterCount));
-        // Currently not in use, but load anyway so I remember how to do it in the future
-      }
-    } catch (java.lang.NumberFormatException e) {
-      Log.d(TAG, "devLetterCount invalid ie not integer");
+    boolean yoonPreference = prefs.getBoolean("hiragana_yoon_preference", false);
+    if (yoonPreference) {
+      usedCharacterSet = yoonCharacters;
+    } else {
+      usedCharacterSet = allCharacters;
     }
 
     Log.d(TAG, BackCode.compareRows(prefs));
