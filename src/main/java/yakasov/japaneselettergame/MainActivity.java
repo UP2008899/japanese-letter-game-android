@@ -1,7 +1,5 @@
 package yakasov.japaneselettergame;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,133 +8,135 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String JSONPATH = "characters.json";
-    private static final String TAG = MainActivity.class.getName();
+  private static final String JSONPATH = "characters.json";
+  private static final String TAG = MainActivity.class.getName();
+  private static final ArrayList<Button> buttons = new ArrayList<>();
+  private final Random rand = new Random();
+  private org.json.simple.JSONObject allCharacters;
+  private Button correctButton;
+  private int score;
+  private boolean settingsRefreshed = false;
+  //    private static int maxLetters = 104;
 
-    private org.json.simple.JSONObject allCharacters;
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
 
-    private static final ArrayList<Button> buttons = new ArrayList<>();
-    private Button correctButton;
+    BackCode backCode = new BackCode(this);
+    allCharacters = backCode.loadJson(JSONPATH);
 
-    private int score;
-    private boolean settingsRefreshed = false;
-    private final Random rand = new Random();
-//    private static int maxLetters = 104;
+    populateButtonsArrayList();
+    setAllCharacters();
+  }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+  /*
+  TODO:
+  - Add developer toggle so developer options actually get applied
+  - General aesthetic fixes
+   */
 
-        BackCode backCode = new BackCode(this);
-        allCharacters = backCode.loadJson(JSONPATH);
+  public void populateButtonsArrayList() {
+    Button buttonA = findViewById(R.id.buttonA);
+    Button buttonB = findViewById(R.id.buttonB);
+    Button buttonC = findViewById(R.id.buttonC);
+    Button buttonD = findViewById(R.id.buttonD);
+    buttons.add(buttonA);
+    buttons.add(buttonB);
+    buttons.add(buttonC);
+    buttons.add(buttonD);
+  }
 
-        populateButtonsArrayList();
-        setAllCharacters();
+  public void setAllCharacters() {
+    if (!settingsRefreshed) {
+      loadPrefs();
+      settingsRefreshed = true;
     }
 
-    /*
-    TODO:
-    - Add developer toggle so developer options actually get applied
-    - Prevent the same character from appearing twice
-    - Add feedback / previous translation back
-    - General aesthetic fixes
-     */
+    correctButton = buttons.get(rand.nextInt(4));
+    setScoreText();
 
-    public void populateButtonsArrayList() {
-        Button buttonA = findViewById(R.id.buttonA);
-        Button buttonB = findViewById(R.id.buttonB);
-        Button buttonC = findViewById(R.id.buttonC);
-        Button buttonD = findViewById(R.id.buttonD);
-        buttons.add(buttonA);
-        buttons.add(buttonB);
-        buttons.add(buttonC);
-        buttons.add(buttonD);
+    BackCode.setPreviousCharacters();
+    if (BackCode.returnCorrectEnglishCharacter() != "") {
+      setFeedbackText();
     }
 
-    public void setAllCharacters() {
-        if (!settingsRefreshed) {
-            loadPrefs();
-            settingsRefreshed = true;
-        }
+    BackCode.getCorrectCharacterObj(allCharacters); // Creates the correct object
+    setMainJapaneseCharacter();
+    setAllEnglishCharacters();
+    setCorrectEnglishCharacter();
+  }
 
-        correctButton = buttons.get(rand.nextInt(4));
-        setScoreText();
+  public void setMainJapaneseCharacter() {
+    TextView tv = findViewById(R.id.mainJapaneseCharacter);
+    tv.setText(BackCode.returnCorrectJapaneseCharacter());
+  }
 
-        BackCode.setPreviousCharacters();
-        setFeedbackText();
-
-        BackCode.getCorrectCharacterObj(allCharacters);  // Creates the correct object
-        setMainJapaneseCharacter();
-        setAllEnglishCharacters();
-        setCorrectEnglishCharacter();
+  public void setAllEnglishCharacters() {
+    ArrayList<String> repeatedCharacters = new ArrayList<>();
+    repeatedCharacters.add(BackCode.returnCorrectEnglishCharacter());
+    for (Button button : buttons) {
+      String letter = BackCode.getRandomEnglishCharacter(allCharacters, repeatedCharacters);
+      repeatedCharacters.add(letter);
+      button.setText(letter);
     }
+  }
 
-    public void setMainJapaneseCharacter() {
-        TextView tv = findViewById(R.id.mainJapaneseCharacter);
-        tv.setText(BackCode.returnCorrectJapaneseCharacter());
-    }
+  public void setCorrectEnglishCharacter() {
+    correctButton.setText(BackCode.returnCorrectEnglishCharacter());
+  }
 
-    public void setAllEnglishCharacters() {
-        ArrayList<String> repeatedCharacters = new ArrayList<>();
-        repeatedCharacters.add(BackCode.returnCorrectEnglishCharacter());
-        for (Button button : buttons) {
-            String letter = BackCode.getRandomEnglishCharacter(allCharacters, repeatedCharacters);
-            repeatedCharacters.add(letter);
-            button.setText(letter);
-        }
-    }
+  public void setScoreText() {
+    TextView tv = findViewById(R.id.scoreText);
+    tv.setText(String.valueOf(score));
+  }
 
-    public void setCorrectEnglishCharacter() {
-        correctButton.setText(BackCode.returnCorrectEnglishCharacter());
-    }
-
-    public void setScoreText() {
-        TextView tv = findViewById(R.id.scoreText);
-        tv.setText(String.valueOf(score));
-    }
-
-    public void setFeedbackText() {
-        TextView tv = findViewById(R.id.feedbackText);
-        tv.setVisibility(View.VISIBLE);
-        tv.setText(getResources().getString(R.string.feedback,
+  public void setFeedbackText() {
+    TextView tv = findViewById(R.id.feedbackText);
+    tv.setVisibility(View.VISIBLE);
+    tv.setText(
+        getResources()
+            .getString(
+                R.string.feedback,
                 BackCode.returnPreviousJapaneseCharacter(),
                 BackCode.returnPreviousEnglishCharacter()));
+  }
+
+  public void buttonPressed(View view) {
+    if (findViewById(view.getId()) == correctButton) {
+      score += 100;
+    } else {
+      score -= 50;
+    }
+    setAllCharacters();
+  }
+
+  public void settingsPressed(View view) {
+    settingsRefreshed = false;
+    Intent intent = new Intent(this, SettingsActivity.class);
+    startActivity(intent);
+  }
+
+  public void loadPrefs() {
+    Log.d(TAG, "Getting prefs");
+    SharedPreferences prefs = getSharedPreferences("yakasov.japaneselettergame_preferences", 0);
+    try {
+      int devLetterCount = Integer.parseInt(prefs.getString("dev_letter_count", ""));
+      if (6 < devLetterCount && devLetterCount <= 104) {
+        Log.d(TAG, String.valueOf(devLetterCount));
+        // maxLetters = dev_letter_count;
+      }
+    } catch (java.lang.NumberFormatException e) {
+      Log.d(TAG, "devLetterCount invalid ie not integer");
     }
 
-    public void buttonPressed(View view) {
-        if (findViewById(view.getId()) == correctButton) {
-            score += 100;
-        } else {
-            score -= 50;
-        }
-        setAllCharacters();
-    }
-
-    public void settingsPressed(View view) {
-        settingsRefreshed = false;
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-    }
-
-    public void loadPrefs() {
-        Log.d(TAG, "Getting prefs");
-        SharedPreferences prefs = getSharedPreferences("yakasov.japaneselettergame_preferences", 0);
-        try {
-            int devLetterCount = Integer.parseInt(prefs.getString("dev_letter_count", ""));
-            if (6 < devLetterCount && devLetterCount <= 104) {
-                Log.d(TAG, String.valueOf(devLetterCount));
-                //maxLetters = dev_letter_count;
-            }
-        } catch (java.lang.NumberFormatException e) {
-            Log.d(TAG, "devLetterCount invalid ie not integer");
-        }
-
-        Log.d(TAG, BackCode.compareRows(prefs));
-    }
+    Log.d(TAG, BackCode.compareRows(prefs));
+  }
 }
