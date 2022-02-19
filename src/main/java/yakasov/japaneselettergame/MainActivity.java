@@ -17,12 +17,12 @@ public class MainActivity extends AppCompatActivity {
 
   private static final String JSONPATH = "characters.json";
   private static final String YOONJSONPATH = "yoon_characters.json";
-  private org.json.simple.JSONObject allCharacters;
-  private org.json.simple.JSONObject yoonCharacters;
-  private org.json.simple.JSONObject usedCharacterSet;
   private static final String TAG = MainActivity.class.getName();
   private static final ArrayList<Button> buttons = new ArrayList<>();
   private final Random rand = new Random();
+  private org.json.simple.JSONObject allCharacters;
+  private org.json.simple.JSONObject yoonCharacters;
+  private org.json.simple.JSONObject usedCharacterSet;
   private Button correctButton;
   private int score;
   private boolean settingsRefreshed = false;
@@ -119,6 +119,11 @@ public class MainActivity extends AppCompatActivity {
     settingsRefreshed = false;
     Intent intent = new Intent(this, SettingsActivity.class);
     startActivity(intent);
+  }
+
+  public void resetPressed(View view) {
+    score = 0;
+    setAllCharacters();
   }
 
   public void loadPrefs() {
