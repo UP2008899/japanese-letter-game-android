@@ -81,8 +81,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setAllEnglishCharacters() {
+        ArrayList<String> repeatedCharacters = new ArrayList<>();
+        repeatedCharacters.add(BackCode.returnCorrectEnglishCharacter());
         for (Button button : buttons) {
-            button.setText(BackCode.getRandomEnglishCharacter(allCharacters));
+            String letter = BackCode.getRandomEnglishCharacter(allCharacters, repeatedCharacters);
+            repeatedCharacters.add(letter);
+            button.setText(letter);
         }
     }
 

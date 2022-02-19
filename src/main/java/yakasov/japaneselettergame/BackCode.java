@@ -79,10 +79,10 @@ public class BackCode {
         correctJapaneseCharacter = (String) correctCharacterObject.get(correctEnglishCharacter);
     }
 
-    public static String getRandomEnglishCharacter(org.json.simple.JSONObject allCharacters) {
+    public static String getRandomEnglishCharacter(org.json.simple.JSONObject allCharacters, ArrayList<String> repeatedCharacters) {
         Random rand = new Random();
-        String randomEnglishCharacter = correctEnglishCharacter;
-        while (randomEnglishCharacter == correctEnglishCharacter) {
+        String randomEnglishCharacter = repeatedCharacters.get(0);
+        while (repeatedCharacters.contains(randomEnglishCharacter)) {
             randomRow = chosenRows.get(rand.nextInt(chosenRows.size()));  // String type
             org.json.simple.JSONArray randomRowArray = (org.json.simple.JSONArray) allCharacters.get(randomRow);
             org.json.simple.JSONObject randomCharacterObject = (org.json.simple.JSONObject) randomRowArray.get(rand.nextInt(randomRowArray.size()));
