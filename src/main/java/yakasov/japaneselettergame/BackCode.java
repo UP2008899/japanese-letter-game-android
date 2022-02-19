@@ -22,33 +22,17 @@ import java.util.Set;
 public class BackCode {
     private final Context context;
 
-    public static String[] allRows = {"a-row", "ka-row", "sa-row", "ta-row", "na-row", "ma-row",
+    private static String[] allRows = {"a-row", "ka-row", "sa-row", "ta-row", "na-row", "ma-row",
                                       "ya-row", "ra-row", "wa-row", "ga-row", "za-row", "da-row",
                                       "ba-row", "pa-row"};
-    public static ArrayList<String> chosenRows;
-    public static String randomRow;
+    private static ArrayList<String> chosenRows;
+    private static String randomRow;
+
+    private static String correctEnglishCharacter = "";
+    private static String correctJapaneseCharacter = "";
 
     public BackCode(Context context) {
         this.context = context;
-    }
-
-    public List<String> readLine(String path) {
-        List<String> lines = new ArrayList<>();
-
-        AssetManager am = context.getAssets();
-
-        try {
-            InputStream is = am.open(path);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            String line;
-
-            while ((line = reader.readLine()) != null)
-                lines.add(line);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return lines;
     }
 
     public org.json.simple.JSONObject loadJson(String path) {
@@ -81,44 +65,29 @@ public class BackCode {
         return String.valueOf(chosenRows);
     }
 
-    public static void getRandomJapaneseCharacter(org.json.simple.JSONObject jsonObject) {
+    public static String returnCorrectEnglishCharacter() { return correctEnglishCharacter; }
+
+    public static String returnCorrectJapaneseCharacter() { return correctEnglishCharacter; }
+
+    public static void getCorrectCharacterObj(org.json.simple.JSONObject allCharacters) {
         Random rand = new Random();
         randomRow = chosenRows.get(rand.nextInt(chosenRows.size()));  // String type
-        org.json.simple.JSONArray randomRowArray = (org.json.simple.JSONArray) jsonObject.get(randomRow);
+        org.json.simple.JSONArray correctRowArray = (org.json.simple.JSONArray) allCharacters.get(randomRow);
+        org.json.simple.JSONObject correctCharacterObject = (org.json.simple.JSONObject) correctRowArray.get(rand.nextInt(correctRowArray.size()));
 
-        org.json.simple.JSONObject randomJapaneseCharacterObj = (org.json.simple.JSONObject) randomRowArray.get(rand.nextInt(randomRowArray.size()));
-        String randomJapaneseCharacter = randomJapaneseCharacterObj.toJSONString();
-        
-        System.out.println(randomRow);
-        System.out.println(randomRowArray);
-        System.out.println(randomJapaneseCharacter);
+        correctEnglishCharacter = (String) correctCharacterObject.keySet().iterator().next();
+        correctJapaneseCharacter = (String) correctCharacterObject.get(correctEnglishCharacter);
     }
 
-    public int getRandomIndex(int max, int previousIndex) {
-        Random random = new Random();
-        int chosenIndex = previousIndex;
-        while (chosenIndex == previousIndex) {
-            chosenIndex = random.nextInt(max);
+    public static String getRandomEnglishCharacter(org.json.simple.JSONObject allCharacters) {
+        Random rand = new Random();
+        String randomEnglishCharacter = correctEnglishCharacter;
+        while (randomEnglishCharacter == correctEnglishCharacter) {
+            randomRow = chosenRows.get(rand.nextInt(chosenRows.size()));  // String type
+            org.json.simple.JSONArray randomRowArray = (org.json.simple.JSONArray) allCharacters.get(randomRow);
+            org.json.simple.JSONObject randomCharacterObject = (org.json.simple.JSONObject) randomRowArray.get(rand.nextInt(randomRowArray.size()));
+            randomEnglishCharacter = (String) randomCharacterObject.keySet().iterator().next();
         }
-        return chosenIndex;
-    }
-
-    public int getRandomIndexExclusionary(int max, ArrayList<Integer> chosenIndexes) {
-        int chosenValue;
-        boolean pickedAlready;
-        while (true) {
-            Random random = new Random();
-            chosenValue = random.nextInt(max);
-
-            pickedAlready = false;
-            for (int i : chosenIndexes) {
-                if (chosenValue == i) {
-                    pickedAlready = true;
-                }
-            }
-            if (!pickedAlready) {
-                return chosenValue;
-            }
-        }
+        return randomEnglishCharacter;
     }
 }

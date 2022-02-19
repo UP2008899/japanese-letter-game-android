@@ -16,17 +16,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String englishPath = "english.txt";
-    public static final String japanesePath = "japanese.txt";
     public static final String jsonPath = "characters.json";
     private static final String TAG = MainActivity.class.getName();
 
     private BackCode backCode;
-    public static List<String> englishLines;
-    public static List<String> japaneseLines;
     public static org.json.simple.JSONObject allCharacters;
 
     public static ArrayList<Button> buttons = new ArrayList<>();
@@ -34,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static int score;
     public static int maxLetters = 104;
-    public static int previousIndex = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         backCode = new BackCode(this);
         allCharacters = backCode.loadJson(jsonPath);
-        Log.d(TAG, String.valueOf(allCharacters));
-        englishLines = backCode.readLine(englishPath);
-        japaneseLines = backCode.readLine(japanesePath);
 
         populateButtonsArrayList();
         setAllCharacters();
@@ -65,41 +58,32 @@ public class MainActivity extends AppCompatActivity {
     public void setAllCharacters() {
         loadPrefs();
 
-        int chosenIndex = backCode.getRandomIndex(maxLetters, previousIndex);
-        correctButton = buttons.get(chosenIndex % 4);
-
+        Random rand = new Random();
+        correctButton = buttons.get(rand.nextInt(4));
         setScoreText();
-        if (previousIndex != -1) {
-            setFeedbackText();
-        }
+//        if (previousIndex != -1) {
+//            setFeedbackText();
+//        }
 
-        previousIndex = chosenIndex;
-
-        setMainJapaneseCharacter(chosenIndex);
-        setAllEnglishCharacters(chosenIndex);
-        setCorrectEnglishCharacter(chosenIndex);
+        BackCode.getCorrectCharacterObj(allCharacters);  // Creates the correct object
+        setMainJapaneseCharacter();
+        setAllEnglishCharacters();
+        setCorrectEnglishCharacter();
     }
 
-    public void setMainJapaneseCharacter(int chosenIndex) {
+    public void setMainJapaneseCharacter() {
         TextView tv = findViewById(R.id.mainJapaneseCharacter);
-        tv.setText(japaneseLines.get(chosenIndex));
+        tv.setText(BackCode.returnCorrectJapaneseCharacter());
     }
 
-    public void setAllEnglishCharacters(int chosenIndex) {
-        ArrayList<Integer> chosenIndexes = new ArrayList<>();
-        chosenIndexes.add(chosenIndex);  // Prevent correct character from being chosen
-                                         // This is for the correct button only
-        chosenIndexes.add(previousIndex);  // Prevent previous character from being chosen
-        int i;
+    public void setAllEnglishCharacters() {
         for (Button button : buttons) {
-            i = backCode.getRandomIndexExclusionary(maxLetters, chosenIndexes);
-            chosenIndexes.add(i);
-            button.setText(englishLines.get(i));
+            button.setText(BackCode.getRandomEnglishCharacter(allCharacters));
         }
     }
 
-    public void setCorrectEnglishCharacter(int chosenIndex) {
-        correctButton.setText(englishLines.get(chosenIndex));
+    public void setCorrectEnglishCharacter() {
+        correctButton.setText(BackCode.returnCorrectEnglishCharacter());
     }
 
     public void setScoreText() {
@@ -110,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
     public void setFeedbackText() {
         TextView tv = findViewById(R.id.feedbackText);
         tv.setVisibility(View.VISIBLE);
-        tv.setText(getResources().getString(R.string.feedback, japaneseLines.get(previousIndex),
-                englishLines.get(previousIndex)));
+//        tv.setText(getResources().getString(R.string.feedback, japaneseLines.get(previousIndex),
+//                englishLines.get(previousIndex)));
 
     }
 
@@ -142,6 +126,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Log.d(TAG, BackCode.compareRows(prefs));
-        BackCode.getRandomJapaneseCharacter(allCharacters);
     }
 }
