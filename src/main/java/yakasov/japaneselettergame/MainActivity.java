@@ -15,17 +15,17 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String jsonPath = "characters.json";
+    private static final String jsonPath = "characters.json";
     private static final String TAG = MainActivity.class.getName();
 
-    public static org.json.simple.JSONObject allCharacters;
+    private static org.json.simple.JSONObject allCharacters;
 
-    public static ArrayList<Button> buttons = new ArrayList<>();
-    public Button correctButton;
+    private static final ArrayList<Button> buttons = new ArrayList<>();
+    private Button correctButton;
 
-    public static int score;
-    public static boolean settingsRefreshed = false;
-    public static int maxLetters = 104;
+    private static int score;
+    private static boolean settingsRefreshed = false;
+//    private static int maxLetters = 104;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             int dev_letter_count = Integer.parseInt(prefs.getString("dev_letter_count", ""));
             if (6 < dev_letter_count && dev_letter_count <= 104) {
-                maxLetters = dev_letter_count;
+                //maxLetters = dev_letter_count;
             }
         } catch (java.lang.NumberFormatException e) {
             Log.d(TAG, "dev_letter_count invalid ie not integer");
