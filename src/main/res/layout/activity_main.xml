@@ -8,15 +8,15 @@
 
     <TextView
         android:id="@+id/mainJapaneseCharacter"
-        android:layout_width="219dp"
-        android:layout_height="169dp"
+        android:layout_width="291dp"
+        android:layout_height="155dp"
         android:textAlignment="center"
-        android:textSize="96sp"
+        android:textSize="112dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.171" />
+        app:layout_constraintVertical_bias="0.131" />
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -113,29 +113,28 @@
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="150dp"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.027" />
 
     <TextView
         android:id="@+id/feedbackText"
         android:layout_width="118dp"
         android:layout_height="43dp"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="240dp"
-        android:layout_marginEnd="140dp"
         android:text="@string/feedback"
         android:textAlignment="center"
         android:textSize="24sp"
         android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.947" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
