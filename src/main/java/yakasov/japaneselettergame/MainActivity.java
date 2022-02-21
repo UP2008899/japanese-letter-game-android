@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
   private org.json.simple.JSONObject yoonCharacters;
   private org.json.simple.JSONObject usedCharacterSet;
   private Button correctButton;
+  private Boolean previousAnswerCorrect = false;
   private int score;
   private boolean settingsRefreshed = false;
 
@@ -44,27 +45,17 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
+  public void onResume(){
+    super.onResume();
+    setAllCharacters();
+  }
+
+  @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.main_menu, menu);
     return true;
   }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.settings_item:
-        settingsPressed();
-        return true;
-      case R.id.reset_item:
-        resetPressed();
-        return true;
-      default:
-        return super.onOptionsItemSelected(item);
-    }
-  }
-
-
 
   public void populateButtonsArrayList() {
     Button buttonA = findViewById(R.id.buttonA);
@@ -124,32 +115,40 @@ public class MainActivity extends AppCompatActivity {
   public void setFeedbackText() {
     TextView tv = findViewById(R.id.feedbackText);
     tv.setVisibility(View.VISIBLE);
-    tv.setText(
-        getResources()
-            .getString(
-                R.string.feedback,
-                BackCode.returnPreviousJapaneseCharacter(),
-                BackCode.returnPreviousEnglishCharacter()));
+    if (Boolean.TRUE.equals(previousAnswerCorrect)) {
+      tv.setText(getResources().getString(R.string.correct_answer));
+    } else {
+      tv.setText(
+          getResources()
+              .getString(
+                  R.string.feedback,
+                  BackCode.returnPreviousJapaneseCharacter(),
+                  BackCode.returnPreviousEnglishCharacter()));
+    }
   }
 
   public void buttonPressed(View view) {
     if (findViewById(view.getId()) == correctButton) {
       score += 100;
+      previousAnswerCorrect = true;
     } else {
       score -= 50;
+      previousAnswerCorrect = false;
     }
     setAllCharacters();
   }
 
-  public void settingsPressed() {
+  public void settingsPressed(MenuItem item) {
     settingsRefreshed = false;
     Intent intent = new Intent(this, SettingsActivity.class);
     startActivity(intent);
   }
 
-  public void resetPressed() {
+  public void resetPressed(MenuItem item) {
     score = 0;
     setAllCharacters();
+    TextView tv = findViewById(R.id.feedbackText);
+    tv.setVisibility(View.INVISIBLE);
   }
 
   public void loadPrefs() {

@@ -4,6 +4,7 @@
     <string name="reset_item">Reset score</string>
 
     <string name="feedback">%1s, %2s</string>
+    <string name="correct_answer">✓</string>
 
     <string name="letters_header">Letters</string>
     <string name="gojuon_rows">Hiragana gojūon rows</string>
