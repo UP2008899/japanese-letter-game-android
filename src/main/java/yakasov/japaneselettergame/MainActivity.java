@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  public void onResume(){
+  public void onResume() {
     super.onResume();
     setAllCharacters();
   }
