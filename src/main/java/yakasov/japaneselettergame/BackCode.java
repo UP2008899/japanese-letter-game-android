@@ -72,7 +72,7 @@ public class BackCode {
 
   public static void getCorrectCharacterObj(org.json.simple.JSONObject allCharacters) {
     correctJapaneseCharacter = previousJapaneseCharacter;
-    while (correctJapaneseCharacter == previousJapaneseCharacter) {
+    while (Objects.equals(correctJapaneseCharacter, previousJapaneseCharacter)) {
       randomRow = chosenRows.get(rand.nextInt(chosenRows.size())); // String type
       org.json.simple.JSONArray correctRowArray =
           (org.json.simple.JSONArray) allCharacters.get(randomRow);
