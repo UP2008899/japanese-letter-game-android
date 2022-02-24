@@ -7,4 +7,5 @@
     <string name="gojuon_rows">ひらがなごじゅおん列伝</string>
     <string name="dakuon_rows">ひらがなのだーくおーん</string>
     <string name="yoon_switch">キャラクターを使う？</string>
+    <string name="dev_colour_switch">正しいボタンを表示する？</string>
 </resources>

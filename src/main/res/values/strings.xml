@@ -11,4 +11,5 @@
     <string name="gojuon_rows">Hiragana gojūon rows</string>
     <string name="dakuon_rows">Hiragana dakuon rows</string>
     <string name="yoon_switch">Use yōon characters?</string>
+    <string name="dev_colour_switch">Show correct button?</string>
 </resources>

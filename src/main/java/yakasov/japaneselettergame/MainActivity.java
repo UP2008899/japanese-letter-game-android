@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
   private org.json.simple.JSONObject yoonCharacters;
   private org.json.simple.JSONObject usedCharacterSet;
   private Button correctButton;
+  private Boolean useCorrectButtonColour = false;
   private Boolean previousAnswerCorrect = false;
   private int score;
   private boolean settingsRefreshed = false;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     yoonCharacters = backCode.loadJson(YOONJSONPATH);
 
     populateButtonsArrayList();
+    // Do not set characters here, onResume is called after onCreate so call function there instead
   }
 
   @Override
@@ -68,13 +70,15 @@ public class MainActivity extends AppCompatActivity {
   }
 
   public void setAllCharacters() {
+    correctButton = buttons.get(rand.nextInt(4));
+    setScoreText();
+
     if (!settingsRefreshed) {
       loadPrefs();
       settingsRefreshed = true;
     }
 
-    correctButton = buttons.get(rand.nextInt(4));
-    setScoreText();
+    setButtonColours();
 
     BackCode.setPreviousCharacters();
     if (!"".equals(BackCode.returnCorrectEnglishCharacter())) {
@@ -85,6 +89,15 @@ public class MainActivity extends AppCompatActivity {
     setMainJapaneseCharacter();
     setAllEnglishCharacters();
     setCorrectEnglishCharacter();
+  }
+
+  public void setButtonColours() {
+    for (Button button : buttons) {
+      button.setBackgroundColor(getResources().getColor(R.color.purple_200));
+    }
+    if (Boolean.TRUE.equals(useCorrectButtonColour)) {
+      correctButton.setBackgroundColor(getResources().getColor(R.color.purple_100));
+      }
   }
 
   public void setMainJapaneseCharacter() {
@@ -154,11 +167,15 @@ public class MainActivity extends AppCompatActivity {
     Log.d(TAG, "Getting prefs");
     SharedPreferences prefs = getSharedPreferences("yakasov.japaneselettergame_preferences", 0);
     boolean yoonPreference = prefs.getBoolean("hiragana_yoon_preference", false);
+    boolean devCorrectButtonColour = prefs.getBoolean("dev_correct_button_colour", false);
+
     if (yoonPreference) {
       usedCharacterSet = yoonCharacters;
     } else {
       usedCharacterSet = allCharacters;
     }
+
+    useCorrectButtonColour = devCorrectButtonColour;
 
     Log.d(TAG, BackCode.compareRows(prefs));
   }
