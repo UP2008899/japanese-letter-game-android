@@ -19,9 +19,8 @@ import java.util.Set;
 
 public class BackCode {
   private static final String[] allRows = {
-    "a-row", "ka-row", "sa-row", "ta-row", "na-row", "ma-row",
-    "ya-row", "ra-row", "wa-row", "ga-row", "za-row", "da-row",
-    "ba-row", "pa-row"
+    "a-row", "ka-row", "sa-row", "ta-row", "na-row", "ha-row", "ma-row", "ya-row", "ra-row",
+    "wa-row", "ga-row", "za-row", "da-row", "ba-row", "pa-row"
   };
   private static final Random rand = new Random();
   private static ArrayList<String> chosenRows;
