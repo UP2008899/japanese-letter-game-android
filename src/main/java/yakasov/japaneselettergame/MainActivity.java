@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     yoonCharacters = backCode.loadJson(YOONJSONPATH);
 
     populateButtonsArrayList();
-    setAllCharacters();
   }
 
   @Override
