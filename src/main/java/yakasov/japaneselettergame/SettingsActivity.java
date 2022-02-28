@@ -33,8 +33,8 @@ public final class SettingsActivity extends AppCompatActivity {
     }
   }
 
-  @Override
-  public boolean onOptionsItemSelected(final MenuItem item) { // Link back arrow to onBackPressed
+  @Override // Link back arrow to onBackPressed
+  public boolean onOptionsItemSelected(final MenuItem item) {
     if (item.getItemId() == android.R.id.home) {
       onBackPressed();
     }
@@ -52,7 +52,8 @@ public final class SettingsActivity extends AppCompatActivity {
    */
   public static final class SettingsFragment extends PreferenceFragmentCompat {
     @Override
-    public void onCreatePreferences(final Bundle savedInstanceState, final String rootKey) {
+    public void onCreatePreferences(
+        final Bundle savedInstanceState, final String rootKey) {
       setPreferencesFromResource(R.xml.root_preferences, rootKey);
     }
   }

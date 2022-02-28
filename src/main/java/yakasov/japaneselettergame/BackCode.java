@@ -83,29 +83,46 @@ public class BackCode {
 
   /**
    * Randomly chooses the correct English and Japanese characters for the next
-   * guess. This is done by choosing a random JSON object
-   * 'correctCharacterObject'. Both characters come from this object.
+   * guess, utilising getRandomJSONObj to get a pair of characters.
    *
    * @param allCharacters loaded JSON from assets/characters.json
    */
-  public static void getCorrectCharacterObj(final org.json.simple.JSONObject allCharacters) {
+  public static void getCorrectCharacterObj(
+      final org.json.simple.JSONObject allCharacters) {
+    org.json.simple.JSONObject correctCharacterObject;
     correctJapaneseCharacter = previousJapaneseCharacter;
-    while (Objects.equals(correctJapaneseCharacter, previousJapaneseCharacter)) {
-      randomRow = chosenRows.get(RAND.nextInt(chosenRows.size())); // String type
-      org.json.simple.JSONArray correctRowArray =
-          (org.json.simple.JSONArray) allCharacters.get(randomRow);
-      org.json.simple.JSONObject correctCharacterObject =
-          (org.json.simple.JSONObject)
-              Objects.requireNonNull(correctRowArray).get(RAND.nextInt(correctRowArray.size()));
-
-      correctEnglishCharacter = (String) correctCharacterObject.keySet().iterator().next();
-      correctJapaneseCharacter = (String) correctCharacterObject.get(correctEnglishCharacter);
+    while (Objects.equals(
+        correctJapaneseCharacter, previousJapaneseCharacter)) {
+      correctCharacterObject = getRandomJSONObj(allCharacters);
+      correctEnglishCharacter = (String) correctCharacterObject.keySet()
+          .iterator().next();
+      correctJapaneseCharacter = (String) correctCharacterObject.get(
+          correctEnglishCharacter);
     }
   }
 
   /**
-   * Randomly chooses an English character for the buttons for the next guess.
-   * These characters are unique and not the same as the correct character. The
+   * Randomly chooses a pair of characters to use from allCharacters. The format
+   * of the resulting JSONObject will be {"x": "y"}, where x is the English
+   * character and y is the Japanese Hiragana equivalent. eg {"n": "ん"}
+   *
+   * @param allCharacters loaded JSON from assets/characters.json
+   * @return randomly chosen row from allCharacters as JSONObject
+   */
+  public static org.json.simple.JSONObject getRandomJSONObj(
+      final org.json.simple.JSONObject allCharacters) {
+    randomRow = chosenRows.get(RAND.nextInt(chosenRows.size())); // String
+    org.json.simple.JSONArray correctRowArray =
+        (org.json.simple.JSONArray) allCharacters.get(randomRow);
+    return (org.json.simple.JSONObject)
+        Objects.requireNonNull(correctRowArray).get(
+            RAND.nextInt(correctRowArray.size()));
+  }
+
+  /**
+   * Randomly chooses the correct English and Japanese characters for the next
+   * guess, utilising getRandomJSONObj to get a pair of characters. These
+   * characters are unique and not the same as the correct character. The
    * correct character button is set separately.
    *
    * @param allCharacters      loaded JSON from assets/characters.json
@@ -114,16 +131,14 @@ public class BackCode {
    * @return String of the random English character chosen
    */
   public static String getRandomEnglishCharacter(
-      final org.json.simple.JSONObject allCharacters, final List<String> repeatedCharacters) {
+      final org.json.simple.JSONObject allCharacters,
+      final List<String> repeatedCharacters) {
+    org.json.simple.JSONObject randomCharacterObject;
     String randomEnglishCharacter = repeatedCharacters.get(0);
     while (repeatedCharacters.contains(randomEnglishCharacter)) {
-      randomRow = chosenRows.get(RAND.nextInt(chosenRows.size())); // String type
-      org.json.simple.JSONArray randomRowArray =
-          (org.json.simple.JSONArray) allCharacters.get(randomRow);
-      org.json.simple.JSONObject randomCharacterObject =
-          (org.json.simple.JSONObject)
-              Objects.requireNonNull(randomRowArray).get(RAND.nextInt(randomRowArray.size()));
-      randomEnglishCharacter = (String) randomCharacterObject.keySet().iterator().next();
+      randomCharacterObject = getRandomJSONObj(allCharacters);
+      randomEnglishCharacter = (String) randomCharacterObject.keySet()
+          .iterator().next();
     }
     return randomEnglishCharacter;
   }
@@ -144,7 +159,8 @@ public class BackCode {
       JSONParser jsonParser = new JSONParser();
       jsonObject =
           (org.json.simple.JSONObject)
-              jsonParser.parse(new InputStreamReader(is, StandardCharsets.UTF_8));
+              jsonParser.parse(new InputStreamReader(
+                  is, StandardCharsets.UTF_8));
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
