@@ -10,12 +10,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * MainActivity class defines the GUI and all related code for the main screen.
+ * All methods defined here directly affect GUI elements.
+ * Any method that does not affect the GUI is placed in BackCode.
+ *
+ * <p>The main game takes place in this activity.
+ */
 public class MainActivity extends AppCompatActivity {
 
   private static final String JSONPATH = "characters.json";
@@ -58,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
     return true;
   }
 
+  /**
+   * Places all onscreen buttons (that the user can press in the bottom half of the screen)
+   * into ArrayList buttons.
+   */
   public void populateButtonsArrayList() {
     Button buttonA = findViewById(R.id.buttonA);
     Button buttonB = findViewById(R.id.buttonB);
@@ -69,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
     buttons.add(buttonD);
   }
 
+  /**
+   * Handles all logic for loading a new guess.
+   * This includes selecting a correct button (and then later setting it to the correct character),
+   * updating the score and feedback text, reloading preferences if the settings activity
+   * has been loaded, and finally setting all the characters onscreen.
+   */
   public void setAllCharacters() {
     correctButton = buttons.get(rand.nextInt(4));
     setScoreText();
@@ -91,13 +106,17 @@ public class MainActivity extends AppCompatActivity {
     setCorrectEnglishCharacter();
   }
 
+  /**
+   * Sets all button colours to their default colour, then sets the correct button
+   * to a different shade if selected in preferences.
+   */
   public void setButtonColours() {
     for (Button button : buttons) {
       button.setBackgroundColor(getResources().getColor(R.color.purple_200));
     }
     if (Boolean.TRUE.equals(useCorrectButtonColour)) {
       correctButton.setBackgroundColor(getResources().getColor(R.color.purple_100));
-      }
+    }
   }
 
   public void setMainJapaneseCharacter() {
@@ -105,6 +124,11 @@ public class MainActivity extends AppCompatActivity {
     tv.setText(BackCode.returnCorrectJapaneseCharacter());
   }
 
+  /**
+   * Uses the getRandomEnglishCharacter method in BackCode to generate random English
+   * characters for use with the buttons, and fills the buttons with them.
+   * Also creates the ArrayList repeatedCharacters so no characters appear twice.
+   */
   public void setAllEnglishCharacters() {
     ArrayList<String> repeatedCharacters = new ArrayList<>();
     repeatedCharacters.add(BackCode.returnCorrectEnglishCharacter());
@@ -124,6 +148,11 @@ public class MainActivity extends AppCompatActivity {
     tv.setText(String.valueOf(score));
   }
 
+  /**
+   * Sets the previous translation text below the main Japanese character.
+   * The translation text can be two different strings (defined in strings.xml)
+   * depending on if the guess was correct.
+   */
   public void setFeedbackText() {
     TextView tv = findViewById(R.id.feedbackText);
     tv.setVisibility(View.VISIBLE);
@@ -139,6 +168,13 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
+  /**
+   * Called upon any button being pressed.
+   * Depending on the button, will change score and the previousAnswerCorrect variable
+   * to different values before calling setAllCharacters to create a new guess.
+   *
+   * @param view basic UI control component. Required for button onClick to function.
+   */
   public void buttonPressed(View view) {
     if (findViewById(view.getId()) == correctButton) {
       score += 100;
@@ -150,12 +186,26 @@ public class MainActivity extends AppCompatActivity {
     setAllCharacters();
   }
 
+  /**
+   * Called upon the settings button in the toolbar being pressed.
+   * Sets settingsRefreshed to false so they can be updated when returning to MainActivity,
+   * and opens SettingsActivity.
+   *
+   * @param item interface for direct access to a menu item
+   */
   public void settingsPressed(MenuItem item) {
     settingsRefreshed = false;
     Intent intent = new Intent(this, SettingsActivity.class);
     startActivity(intent);
   }
 
+  /**
+   * Called upon the reset button in the toolbar being pressed.
+   * Sets the score to 0, sets the previous translation to invisible,
+   * and generates a new guess. Similar to reopening the app.
+   *
+   * @param item interface for direct access to a menu item
+   */
   public void resetPressed(MenuItem item) {
     score = 0;
     setAllCharacters();
@@ -163,6 +213,16 @@ public class MainActivity extends AppCompatActivity {
     tv.setVisibility(View.INVISIBLE);
   }
 
+  /**
+   * Loads preferences for the app from Android internal storage.
+   * Preferences are stored in yakasov.japaneselettergame_preferences, and used as the prefs
+   * SharedPreferences object.
+   *
+   * <p>yoonPreference = if yōon characters should be used in the game
+   * devCorrectButtonColour = if the correct button should be coloured differently
+   *
+   * <p>Preferences for individual selected rows is handled separately in BackCode.compareRows.
+   */
   public void loadPrefs() {
     Log.d(TAG, "Getting prefs");
     SharedPreferences prefs = getSharedPreferences("yakasov.japaneselettergame_preferences", 0);
@@ -178,5 +238,6 @@ public class MainActivity extends AppCompatActivity {
     useCorrectButtonColour = devCorrectButtonColour;
 
     Log.d(TAG, BackCode.compareRows(prefs));
+    // BackCode.compareRows needs to be called, and returns a string of chosen rows.
   }
 }
