@@ -21,13 +21,15 @@ import java.util.Random;
  *
  * <p>The main game takes place in this activity.
  */
-public class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity {
 
   private static final String JSONPATH = "characters.json";
   private static final String YOONJSONPATH = "yoon_characters.json";
   private static final String TAG = MainActivity.class.getName();
-  private static final ArrayList<Button> buttons = new ArrayList<>();
-  private final Random rand = new Random();
+  private static final ArrayList<Button> BUTTONS = new ArrayList<>();
+  private static final Random RAND = new Random();
+  private static final int SCOREINCREASE = 100;
+  private static final int SCOREDECREASE = -50;
   private org.json.simple.JSONObject allCharacters;
   private org.json.simple.JSONObject yoonCharacters;
   private org.json.simple.JSONObject usedCharacterSet;
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
   private boolean settingsRefreshed = false;
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
@@ -57,14 +59,14 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
+  public boolean onCreateOptionsMenu(final Menu menu) {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.main_menu, menu);
     return true;
   }
 
   /**
-   * Places all onscreen buttons (that the user can press in the bottom half of the screen)
+   * Places all onscreen BUTTONS (that the user can press in the bottom half of the screen)
    * into ArrayList buttons.
    */
   public void populateButtonsArrayList() {
@@ -72,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
     Button buttonB = findViewById(R.id.buttonB);
     Button buttonC = findViewById(R.id.buttonC);
     Button buttonD = findViewById(R.id.buttonD);
-    buttons.add(buttonA);
-    buttons.add(buttonB);
-    buttons.add(buttonC);
-    buttons.add(buttonD);
+    BUTTONS.add(buttonA);
+    BUTTONS.add(buttonB);
+    BUTTONS.add(buttonC);
+    BUTTONS.add(buttonD);
   }
 
   /**
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
    * has been loaded, and finally setting all the characters onscreen.
    */
   public void setAllCharacters() {
-    correctButton = buttons.get(rand.nextInt(4));
+    correctButton = BUTTONS.get(RAND.nextInt(BUTTONS.size()));
     setScoreText();
 
     if (!settingsRefreshed) {
@@ -111,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
    * to a different shade if selected in preferences.
    */
   public void setButtonColours() {
-    for (Button button : buttons) {
+    for (Button button : BUTTONS) {
       button.setBackgroundColor(getResources().getColor(R.color.purple_200));
     }
     if (Boolean.TRUE.equals(useCorrectButtonColour)) {
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
   public void setAllEnglishCharacters() {
     ArrayList<String> repeatedCharacters = new ArrayList<>();
     repeatedCharacters.add(BackCode.returnCorrectEnglishCharacter());
-    for (Button button : buttons) {
+    for (Button button : BUTTONS) {
       String letter = BackCode.getRandomEnglishCharacter(usedCharacterSet, repeatedCharacters);
       repeatedCharacters.add(letter);
       button.setText(letter);
@@ -175,12 +177,12 @@ public class MainActivity extends AppCompatActivity {
    *
    * @param view basic UI control component. Required for button onClick to function.
    */
-  public void buttonPressed(View view) {
+  public void buttonPressed(final View view) {
     if (findViewById(view.getId()) == correctButton) {
-      score += 100;
+      score += SCOREINCREASE;
       previousAnswerCorrect = true;
     } else {
-      score -= 50;
+      score += SCOREDECREASE;
       previousAnswerCorrect = false;
     }
     setAllCharacters();
@@ -193,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
    *
    * @param item interface for direct access to a menu item
    */
-  public void settingsPressed(MenuItem item) {
+  public void settingsPressed(final MenuItem item) {
     settingsRefreshed = false;
     Intent intent = new Intent(this, SettingsActivity.class);
     startActivity(intent);
@@ -206,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
    *
    * @param item interface for direct access to a menu item
    */
-  public void resetPressed(MenuItem item) {
+  public void resetPressed(final MenuItem item) {
     score = 0;
     setAllCharacters();
     TextView tv = findViewById(R.id.feedbackText);
