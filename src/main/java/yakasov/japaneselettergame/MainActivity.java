@@ -49,8 +49,6 @@ public final class MainActivity extends AppCompatActivity {
     yoonCharacters = backCode.loadJson(YOONJSONPATH);
 
     populateButtonsArrayList();
-    // Do not set characters here, onResume is called after
-    // onCreate so call function there instead
   }
 
   @Override
@@ -122,9 +120,7 @@ public final class MainActivity extends AppCompatActivity {
     useCorrectButtonColour = devCorrectButtonColour;
 
     Log.d(TAG, BackCode.compareRows(prefs));
-    // BackCode.compareRows needs to be called,
-    // and returns a string of chosen rows.
-    // Move to alone line in future?
+    // Do not remove compareRows call; only Log.d
   }
 
   /**

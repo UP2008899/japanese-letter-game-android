@@ -29,7 +29,6 @@ public class BackCode {
   };
   private static final Random RAND = new Random();
   private static ArrayList<String> chosenRows;
-  private static String randomRow;
   private static String correctEnglishCharacter = "";
   private static String correctJapaneseCharacter = "";
   private static String previousEnglishCharacter = "";
@@ -93,7 +92,7 @@ public class BackCode {
     correctJapaneseCharacter = previousJapaneseCharacter;
     while (Objects.equals(
         correctJapaneseCharacter, previousJapaneseCharacter)) {
-      correctCharacterObject = getRandomJSONObj(allCharacters);
+      correctCharacterObject = getRandomJsonObj(allCharacters);
       correctEnglishCharacter = (String) correctCharacterObject.keySet()
           .iterator().next();
       correctJapaneseCharacter = (String) correctCharacterObject.get(
@@ -109,9 +108,9 @@ public class BackCode {
    * @param allCharacters loaded JSON from assets/characters.json
    * @return randomly chosen row from allCharacters as JSONObject
    */
-  public static org.json.simple.JSONObject getRandomJSONObj(
+  public static org.json.simple.JSONObject getRandomJsonObj(
       final org.json.simple.JSONObject allCharacters) {
-    randomRow = chosenRows.get(RAND.nextInt(chosenRows.size())); // String
+    String randomRow = chosenRows.get(RAND.nextInt(chosenRows.size()));
     org.json.simple.JSONArray correctRowArray =
         (org.json.simple.JSONArray) allCharacters.get(randomRow);
     return (org.json.simple.JSONObject)
@@ -136,7 +135,7 @@ public class BackCode {
     org.json.simple.JSONObject randomCharacterObject;
     String randomEnglishCharacter = repeatedCharacters.get(0);
     while (repeatedCharacters.contains(randomEnglishCharacter)) {
-      randomCharacterObject = getRandomJSONObj(allCharacters);
+      randomCharacterObject = getRandomJsonObj(allCharacters);
       randomEnglishCharacter = (String) randomCharacterObject.keySet()
           .iterator().next();
     }
