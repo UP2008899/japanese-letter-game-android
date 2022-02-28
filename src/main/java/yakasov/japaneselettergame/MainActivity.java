@@ -55,6 +55,8 @@ public final class MainActivity extends AppCompatActivity {
   public void onResume() {
     super.onResume();
     setAllCharacters();
+    TextView tv = findViewById(R.id.feedbackText);
+    tv.setVisibility(View.INVISIBLE); // Hide feedback text when returning
   }
 
   /**
