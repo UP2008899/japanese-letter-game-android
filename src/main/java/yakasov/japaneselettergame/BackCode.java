@@ -3,6 +3,7 @@ package yakasov.japaneselettergame;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.util.Log;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.util.Set;
  * correct translations.
  */
 public class BackCode {
+  private static final String TAG = BackCode.class.getName();
   private static final String[] ALLROWS = {
       "a-row", "ka-row", "sa-row", "ta-row", "na-row", "ha-row", "ma-row",
       "ya-row", "ra-row", "wa-row", "ga-row", "za-row", "da-row",
@@ -49,12 +51,16 @@ public class BackCode {
   public static String compareRows(final SharedPreferences prefs) {
     chosenRows = new ArrayList<>();
     chosenRows.add("a-row");
-    Set<String> gojuon = prefs.getStringSet("hiragana_gojuon_list", null);
-    Set<String> dakuon = prefs.getStringSet("hiragana_dakuon_list", null);
-    for (String row : ALLROWS) {
-      if (gojuon.contains(row) || dakuon.contains(row)) {
-        chosenRows.add(row);
+    try {
+      Set<String> gojuon = prefs.getStringSet("hiragana_gojuon_list", null);
+      Set<String> dakuon = prefs.getStringSet("hiragana_dakuon_list", null);
+      for (String row : ALLROWS) {
+        if (gojuon.contains(row) || dakuon.contains(row)) {
+          chosenRows.add(row);
+        }
       }
+    } catch (java.lang.NullPointerException ignored) {
+      Log.d(TAG, "Error loading prefs, perhaps pref.getStringSet failed?");
     }
     return String.valueOf(chosenRows);
   }
