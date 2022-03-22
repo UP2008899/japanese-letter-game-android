@@ -8,6 +8,7 @@
     <string name="correct_answer" translatable="false">✓</string>
 
     <string name="letters_header">Letters</string>
+    <string-array name="empty_array"/>
     <string name="gojuon_rows">Hiragana gojūon rows</string>
     <string name="dakuon_rows">Hiragana dakuon rows</string>
     <string name="yoon_switch">Use yōon characters?</string>

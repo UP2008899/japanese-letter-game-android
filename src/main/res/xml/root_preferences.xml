@@ -9,13 +9,13 @@
         tools:ignore="TextContrastCheck">
 
         <MultiSelectListPreference
-            android:defaultValue="@array/gojuon_rows"
+            android:defaultValue="@array/empty_array"
             android:entries="@array/gojuon_rows"
             android:entryValues="@array/gojuon_rows"
             android:key="hiragana_gojuon_list"
             android:title="@string/gojuon_rows" />
         <MultiSelectListPreference
-            android:defaultValue="@array/dakuon_rows"
+            android:defaultValue="@array/empty_array"
             android:entries="@array/dakuon_rows"
             android:entryValues="@array/dakuon_rows"
             android:key="hiragana_dakuon_list"
