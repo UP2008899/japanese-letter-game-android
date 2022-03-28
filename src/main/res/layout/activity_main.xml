@@ -8,10 +8,10 @@
 
     <TextView
         android:id="@+id/mainJapaneseCharacter"
-        android:layout_width="291dp"
-        android:layout_height="155dp"
+        android:layout_width="@dimen/_291sdp"
+        android:layout_height="@dimen/_155sdp"
         android:textAlignment="center"
-        android:textSize="112sp"
+        android:textSize="@dimen/_100ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -20,8 +20,8 @@
 
     <TableLayout
         android:id="@+id/tableLayout"
-        android:layout_width="412dp"
-        android:layout_height="311dp"
+        android:layout_width="@dimen/_325sdp"
+        android:layout_height="@dimen/_225sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -45,7 +45,7 @@
                 android:insetBottom="0dp"
                 android:onClick="buttonPressed"
                 android:textColor="@color/android_dark_grey"
-                android:textSize="24sp"
+                android:textSize="@dimen/_24ssp"
                 app:cornerRadius="0dp"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -61,7 +61,7 @@
                 android:insetBottom="0dp"
                 android:onClick="buttonPressed"
                 android:textColor="@color/android_dark_grey"
-                android:textSize="24sp"
+                android:textSize="@dimen/_24ssp"
                 app:cornerRadius="0dp"
                 tools:ignore="SpeakableTextPresentCheck" />
         </TableRow>
@@ -85,7 +85,7 @@
                 android:insetBottom="0dp"
                 android:onClick="buttonPressed"
                 android:textColor="@color/android_dark_grey"
-                android:textSize="24sp"
+                android:textSize="@dimen/_24ssp"
                 app:cornerRadius="0dp"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -101,7 +101,7 @@
                 android:insetBottom="0dp"
                 android:onClick="buttonPressed"
                 android:textColor="@color/android_dark_grey"
-                android:textSize="24sp"
+                android:textSize="@dimen/_24ssp"
                 app:cornerRadius="0dp"
                 tools:ignore="SpeakableTextPresentCheck" />
         </TableRow>
@@ -111,7 +111,7 @@
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,11 +122,11 @@
 
     <TextView
         android:id="@+id/feedbackText"
-        android:layout_width="118dp"
-        android:layout_height="43dp"
+        android:layout_width="@dimen/_118sdp"
+        android:layout_height="@dimen/_43sdp"
         android:text="@string/feedback"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="@dimen/_24ssp"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
