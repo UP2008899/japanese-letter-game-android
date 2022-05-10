@@ -45,7 +45,7 @@
                 android:insetBottom="0dp"
                 android:onClick="buttonPressed"
                 android:textColor="@color/android_dark_grey"
-                android:textSize="@dimen/_24ssp"
+                android:textSize="@dimen/_30ssp"
                 app:cornerRadius="0dp"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -61,7 +61,7 @@
                 android:insetBottom="0dp"
                 android:onClick="buttonPressed"
                 android:textColor="@color/android_dark_grey"
-                android:textSize="@dimen/_24ssp"
+                android:textSize="@dimen/_30ssp"
                 app:cornerRadius="0dp"
                 tools:ignore="SpeakableTextPresentCheck" />
         </TableRow>
@@ -85,7 +85,7 @@
                 android:insetBottom="0dp"
                 android:onClick="buttonPressed"
                 android:textColor="@color/android_dark_grey"
-                android:textSize="@dimen/_24ssp"
+                android:textSize="@dimen/_30ssp"
                 app:cornerRadius="0dp"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -101,7 +101,7 @@
                 android:insetBottom="0dp"
                 android:onClick="buttonPressed"
                 android:textColor="@color/android_dark_grey"
-                android:textSize="@dimen/_24ssp"
+                android:textSize="@dimen/_30ssp"
                 app:cornerRadius="0dp"
                 tools:ignore="SpeakableTextPresentCheck" />
         </TableRow>
@@ -126,7 +126,7 @@
         android:layout_height="@dimen/_43sdp"
         android:text="@string/feedback"
         android:textAlignment="center"
-        android:textSize="@dimen/_24ssp"
+        android:textSize="@dimen/_30ssp"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
