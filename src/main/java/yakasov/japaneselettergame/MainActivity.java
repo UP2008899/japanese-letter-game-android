@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,13 +26,15 @@ public final class MainActivity extends AppCompatActivity {
 
   private static final String JSONPATH = "characters.json";
   private static final String YOONJSONPATH = "yoon_characters.json";
+  private static final String JSONSWAPPEDPATH = "characters_swapped.json";
   private static final String TAG = MainActivity.class.getName();
   private static final ArrayList<Button> BUTTONS = new ArrayList<>();
   private static final Random RAND = new Random();
   private static final int SCOREINCREASE = 100;
-  private static final int SCOREDECREASE = -50;
+  private static final int SCOREDECREASE = -200;
   private org.json.simple.JSONObject allCharacters;
   private org.json.simple.JSONObject yoonCharacters;
+  private org.json.simple.JSONObject swappedCharacters;
   private org.json.simple.JSONObject usedCharacterSet;
   private Button correctButton;
   private Boolean useCorrectButtonColour = false;
@@ -46,6 +49,7 @@ public final class MainActivity extends AppCompatActivity {
 
     BackCode backCode = new BackCode(this);
     allCharacters = backCode.loadJson(JSONPATH);
+    swappedCharacters = backCode.loadJson(JSONSWAPPEDPATH);
     yoonCharacters = backCode.loadJson(YOONJSONPATH);
 
     populateButtonsArrayList();
@@ -110,13 +114,19 @@ public final class MainActivity extends AppCompatActivity {
         "yakasov.japaneselettergame_preferences", 0);
     boolean yoonPreference = prefs.getBoolean(
         "hiragana_yoon_preference", false);
+    boolean swapPreference = prefs.getBoolean(
+        "swap_characters", false);
     boolean devCorrectButtonColour = prefs.getBoolean(
         "dev_correct_button_colour", false);
 
     if (yoonPreference) {
       usedCharacterSet = yoonCharacters;
+    } else if (swapPreference) {
+      usedCharacterSet = swappedCharacters;
+      setButtonTextSizes(36);
     } else {
       usedCharacterSet = allCharacters;
+      setButtonTextSizes(24);
     }
 
     useCorrectButtonColour = devCorrectButtonColour;
@@ -184,6 +194,25 @@ public final class MainActivity extends AppCompatActivity {
 
   public void setCorrectEnglishCharacter() {
     correctButton.setText(BackCode.returnCorrectEnglishCharacter());
+  }
+
+  /**
+   * Sets all button text sizes to the given argument size.
+   *
+   * @param size size in ssp.
+   */
+  public void setButtonTextSizes(final int size) {
+    for (Button button : BUTTONS) {
+      if (size == 36) {
+        button.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            getResources().getDimensionPixelSize(R.dimen._36ssp));
+      } else {
+        button.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            getResources().getDimensionPixelSize(R.dimen._24ssp));
+      }
+    }
   }
 
   /**
