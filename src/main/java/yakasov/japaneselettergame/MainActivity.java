@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -122,8 +123,10 @@ public final class MainActivity extends AppCompatActivity {
       usedCharacterSet = yoonCharacters;
     } else if (swapPreference) {
       usedCharacterSet = swappedCharacters;
+      setButtonTextSizes(36);
     } else {
       usedCharacterSet = allCharacters;
+      setButtonTextSizes(24);
     }
 
     useCorrectButtonColour = devCorrectButtonColour;
@@ -191,6 +194,25 @@ public final class MainActivity extends AppCompatActivity {
 
   public void setCorrectEnglishCharacter() {
     correctButton.setText(BackCode.returnCorrectEnglishCharacter());
+  }
+
+  /**
+   * Sets all button text sizes to the given argument size.
+   *
+   * @param size size in ssp.
+   */
+  public void setButtonTextSizes(final int size) {
+    for (Button button : BUTTONS) {
+      if (size == 36) {
+        button.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            getResources().getDimensionPixelSize(R.dimen._36ssp));
+      } else {
+        button.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            getResources().getDimensionPixelSize(R.dimen._24ssp));
+      }
+    }
   }
 
   /**
