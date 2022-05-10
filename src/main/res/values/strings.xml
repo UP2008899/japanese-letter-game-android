@@ -4,8 +4,9 @@
     <string name="title_activity_settings">Settings</string>
     <string name="reset_item">Reset score</string>
 
-    <string name="feedback" translatable="false">%1s, %2s</string>
+    <string name="feedback" translatable="false">%1s (%2s, %1s)</string>
     <string name="correct_answer" translatable="false">✓</string>
+    <string name="incorrect_answer" translatable="false">✗</string>
 
     <string name="letters_header">Letters</string>
     <string-array name="empty_array"/>

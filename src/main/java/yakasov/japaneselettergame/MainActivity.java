@@ -159,12 +159,19 @@ public final class MainActivity extends AppCompatActivity {
     TextView tv = findViewById(R.id.feedbackText);
     tv.setVisibility(View.VISIBLE);
     if (Boolean.TRUE.equals(previousAnswerCorrect)) {
-      tv.setText(getResources().getString(R.string.correct_answer));
+      tv.setText(
+          getResources()
+              .getString(
+                  R.string.feedback,
+                  getResources().getString(R.string.correct_answer),
+                  BackCode.returnPreviousJapaneseCharacter(),
+                  BackCode.returnPreviousEnglishCharacter()));
     } else {
       tv.setText(
           getResources()
               .getString(
                   R.string.feedback,
+                  getResources().getString(R.string.incorrect_answer),
                   BackCode.returnPreviousJapaneseCharacter(),
                   BackCode.returnPreviousEnglishCharacter()));
     }
